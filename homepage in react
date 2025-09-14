@@ -1,0 +1,98 @@
+import { useState } from "react";
+import { Search, Heart, MessageCircle, PlusCircle } from "lucide-react";
+
+export default function UGCAppHomepage() {
+  const [posts] = useState([
+    {
+      id: 1,
+      user: "Jane Doe",
+      avatar: "https://i.pravatar.cc/100?img=1",
+      content: "Just tried this new AI tool, it’s amazing! 🚀",
+      image: "https://source.unsplash.com/random/600x400?tech",
+      likes: 12,
+      comments: 3,
+    },
+    {
+      id: 2,
+      user: "Mike Smith",
+      avatar: "https://i.pravatar.cc/100?img=2",
+      content: "Beautiful sunset today 🌅",
+      image: "https://source.unsplash.com/random/600x400?nature",
+      likes: 34,
+      comments: 5,
+    },
+  ]);
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      {/* Top Nav */}
+      <header className="bg-white shadow p-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold">UGC App</h1>
+        <div className="flex items-center space-x-2 bg-gray-200 px-3 py-1 rounded-full">
+          <Search size={18} />
+          <input
+            type="text"
+            placeholder="Search..."
+            className="bg-transparent outline-none text-sm"
+          />
+        </div>
+      </header>
+
+      {/* Feed */}
+      <main className="flex-1 overflow-y-auto p-4 space-y-4">
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            className="bg-white rounded-2xl shadow p-4 space-y-3"
+          >
+            {/* User Info */}
+            <div className="flex items-center space-x-3">
+              <img
+                src={post.avatar}
+                alt={post.user}
+                className="w-10 h-10 rounded-full"
+              />
+              <span className="font-semibold">{post.user}</span>
+            </div>
+
+            {/* Post Content */}
+            <p className="text-gray-700">{post.content}</p>
+            {post.image && (
+              <img
+                src={post.image}
+                alt="Post"
+                className="w-full rounded-xl object-cover"
+              />
+            )}
+
+            {/* Actions */}
+            <div className="flex items-center justify-between text-gray-600">
+              <button className="flex items-center space-x-1 hover:text-red-500">
+                <Heart size={18} /> <span>{post.likes}</span>
+              </button>
+              <button className="flex items-center space-x-1 hover:text-blue-500">
+                <MessageCircle size={18} /> <span>{post.comments}</span>
+              </button>
+            </div>
+          </div>
+        ))}
+      </main>
+
+      {/* Bottom Nav */}
+      <footer className="bg-white shadow p-4 flex justify-around">
+        <button className="flex flex-col items-center text-gray-600">
+          <PlusCircle size={24} />
+          <span className="text-xs">New Post</span>
+        </button>
+        <button className="flex flex-col items-center text-gray-600">
+          <Heart size={24} />
+          <span className="text-xs">Likes</span>
+        </button>
+        <button className="flex flex-col items-center text-gray-600">
+          <MessageCircle size={24} />
+          <span className="text-xs">Messages</span>
+        </button>
+      </footer>
+    </div>
+  );
+}
