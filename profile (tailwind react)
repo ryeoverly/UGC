@@ -1,0 +1,82 @@
+// ProfilePage.jsx
+import { useState } from "react";
+import { Camera, Heart, MessageCircle } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+export default function ProfilePage() {
+  const [posts] = useState([
+    {
+      id: 1,
+      image: "https://source.unsplash.com/random/400x300?sig=1",
+      likes: 120,
+      comments: 15,
+    },
+    {
+      id: 2,
+      image: "https://source.unsplash.com/random/400x300?sig=2",
+      likes: 85,
+      comments: 8,
+    },
+    {
+      id: 3,
+      image: "https://source.unsplash.com/random/400x300?sig=3",
+      likes: 200,
+      comments: 30,
+    },
+  ]);
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      {/* Profile Header */}
+      <div className="flex items-center gap-6">
+        <img
+          src="https://source.unsplash.com/random/150x150?face"
+          alt="Profile"
+          className="w-28 h-28 rounded-full object-cover border-4 border-gray-200 shadow"
+        />
+        <div>
+          <h1 className="text-2xl font-bold">Jane Doe</h1>
+          <p className="text-gray-600">Content creator | Storyteller ✨</p>
+          <div className="flex gap-4 mt-2">
+            <span className="font-semibold">320</span> Followers
+            <span className="font-semibold">180</span> Following
+            <span className="font-semibold">45</span> Posts
+          </div>
+          <Button className="mt-3">Edit Profile</Button>
+        </div>
+      </div>
+
+      {/* User Bio */}
+      <div className="mt-6">
+        <p className="text-gray-700">
+          Sharing my journey through photography and travel 🌍. 
+          Lover of coffee, sunsets, and candid moments.
+        </p>
+      </div>
+
+      {/* Content Grid */}
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <Card key={post.id} className="overflow-hidden group cursor-pointer">
+            <CardContent className="p-0 relative">
+              <img
+                src={post.image}
+                alt="Post"
+                className="w-full h-60 object-cover group-hover:scale-105 transition-transform"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4 text-white text-lg transition-opacity">
+                <span className="flex items-center gap-1">
+                  <Heart size={20} /> {post.likes}
+                </span>
+                <span className="flex items-center gap-1">
+                  <MessageCircle size={20} /> {post.comments}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
