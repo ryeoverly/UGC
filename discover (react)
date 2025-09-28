@@ -1,0 +1,81 @@
+import React from "react";
+import { Search, Heart, Play, User } from "lucide-react";
+
+const posts = [
+  {
+    id: 1,
+    user: "JaneDoe",
+    thumbnail: "https://source.unsplash.com/random/400x400?sig=1",
+    likes: 254,
+    type: "image",
+  },
+  {
+    id: 2,
+    user: "Alex99",
+    thumbnail: "https://source.unsplash.com/random/400x400?sig=2",
+    likes: 421,
+    type: "video",
+  },
+  {
+    id: 3,
+    user: "SamWrites",
+    thumbnail: "https://source.unsplash.com/random/400x400?sig=3",
+    likes: 88,
+    type: "image",
+  },
+  {
+    id: 4,
+    user: "CreativeGuy",
+    thumbnail: "https://source.unsplash.com/random/400x400?sig=4",
+    likes: 302,
+    type: "video",
+  },
+];
+
+export default function DiscoverPage() {
+  return (
+    <div className="min-h-screen bg-gray-50 p-4">
+      {/* Header */}
+      <header className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold">Discover</h1>
+        <div className="relative w-64">
+          <input
+            type="text"
+            placeholder="Search creators, tags..."
+            className="w-full rounded-full border border-gray-300 pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+        </div>
+      </header>
+
+      {/* Content Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            className="relative group rounded-xl overflow-hidden shadow hover:shadow-lg transition"
+          >
+            <img
+              src={post.thumbnail}
+              alt={post.user}
+              className="object-cover w-full h-48"
+            />
+            {post.type === "video" && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition">
+                <Play className="text-white" size={32} />
+              </div>
+            )}
+            <div className="absolute bottom-2 left-2 flex items-center space-x-2 text-white">
+              <User size={16} />
+              <span className="text-sm">{post.user}</span>
+            </div>
+            <div className="absolute top-2 right-2 flex items-center space-x-1 text-white">
+              <Heart size={16} />
+              <span className="text-sm">{post.likes}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
