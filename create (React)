@@ -1,0 +1,129 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Upload, Image, Globe, Lock } from "lucide-react";
+
+export default function UGCCreationPage() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
+  const [visibility, setVisibility] = useState("public");
+  const [media, setMedia] = useState(null);
+
+  const handleFileChange = (e) => {
+    setMedia(e.target.files[0]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newPost = { title, content, tags, visibility, media };
+    console.log("UGC Submitted:", newPost);
+    // TODO: send data to backend API
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      <Card className="w-full max-w-2xl shadow-lg rounded-2xl">
+        <CardContent className="p-8">
+          <h1 className="text-2xl font-semibold mb-6 text-gray-800">
+            Create New Post
+          </h1>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Title */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">
+                Title
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter post title"
+                className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-200"
+                required
+              />
+            </div>
+
+            {/* Content */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">
+                Content
+              </label>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Write your post..."
+                rows="6"
+                className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-200 resize-none"
+                required
+              />
+            </div>
+
+            {/* Media Upload */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">
+                Upload Media
+              </label>
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2 cursor-pointer bg-blue-50 hover:bg-blue-100 border rounded-lg p-3">
+                  <Upload className="w-4 h-4 text-blue-600" />
+                  <span className="text-blue-600 font-medium">Upload File</span>
+                  <input
+                    type="file"
+                    accept="image/*,video/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                </label>
+                {media && (
+                  <div className="flex items-center gap-2 text-gray-700 text-sm">
+                    <Image className="w-4 h-4" />
+                    <span>{media.name}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">
+                Tags
+              </label>
+              <input
+                type="text"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="e.g. design, code, AI"
+                className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-200"
+              />
+            </div>
+
+            {/* Visibility */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">
+                Visibility
+              </label>
+              <select
+                value={visibility}
+                onChange={(e) => setVisibility(e.target.value)}
+                className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-200"
+              >
+                <option value="public">🌍 Public</option>
+                <option value="private">🔒 Private</option>
+              </select>
+            </div>
+
+            {/* Submit */}
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-3 font-semibold"
+            >
+              Publish Post
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
